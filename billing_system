@@ -1,0 +1,29 @@
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+
+class BillingSystem:
+    def __init__(self):
+        self.cart = []
+
+    def add_product(self, product, quantity):
+        self.cart.append((product, quantity))
+
+    def generate_bill(self):
+        total = 0
+        for product, qty in self.cart:
+            total += product.price * qty
+        discount = total * 0.1 if total > 1000 else 0
+        final_amount = total - discount
+        print("Total:", total)
+        print("Discount:", discount)
+        print("Final Amount:", final_amount)
+
+
+# Example
+p1 = Product("Shirt", 500)
+bill = BillingSystem()
+bill.add_product(p1, 3)
+bill.generate_bill()

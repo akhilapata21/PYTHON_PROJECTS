@@ -1,0 +1,30 @@
+class Task:
+    def __init__(self, title, deadline, priority, category):
+        self.title = title
+        self.deadline = deadline
+        self.priority = priority
+        self.category = category
+
+
+class TodoManager:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print("Task Added!")
+
+    def show_tasks(self):
+        for t in self.tasks:
+            print(f"{t.title} | {t.deadline} | {t.priority} | {t.category}")
+
+    def filter_by_category(self, category):
+        for t in self.tasks:
+            if t.category == category:
+                print(t.title)
+
+
+# Example
+manager = TodoManager()
+manager.add_task(Task("Hackathon", "10 March", "High", "Project"))
+manager.show_tasks()

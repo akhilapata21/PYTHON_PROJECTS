@@ -1,0 +1,39 @@
+class Vehicle:
+    def __init__(self, number, vehicle_type):
+        self.number = number
+        self.vehicle_type = vehicle_type
+
+
+class ParkingLot:
+    def __init__(self, total_spots):
+        self.total_spots = total_spots
+        self.available_spots = total_spots
+        self.parked_vehicles = {}
+
+    def park_vehicle(self, vehicle):
+        if self.available_spots > 0:
+            self.parked_vehicles[vehicle.number] = vehicle
+            self.available_spots -= 1
+            print("Vehicle parked successfully.")
+        else:
+            print("Parking Full!")
+
+    def exit_vehicle(self, number, hours):
+        if number in self.parked_vehicles:
+            fee = hours * 20
+            del self.parked_vehicles[number]
+            self.available_spots += 1
+            print(f"Vehicle exited. Parking Fee: ₹{fee}")
+        else:
+            print("Vehicle not found.")
+
+    def show_status(self):
+        print("Available Spots:", self.available_spots)
+
+
+# Example
+lot = ParkingLot(5)
+v1 = Vehicle("OD01AB1234", "Car")
+lot.park_vehicle(v1)
+lot.show_status()
+lot.exit_vehicle("OD01AB1234", 3)

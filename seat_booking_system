@@ -1,0 +1,15 @@
+seats = ["A1","A2","A3","A4","A5"]
+
+while True:
+    print("\nAvailable seats:", seats)
+
+    seat = input("Select seat (or exit): ")
+
+    if seat == "exit":
+        break
+
+    if seat in seats:
+        seats.remove(seat)
+        print("Seat booked:", seat)
+    else:
+        print("Seat not available")
