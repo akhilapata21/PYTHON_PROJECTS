@@ -1,0 +1,93 @@
+# Student Grade Management System
+
+students = {}
+
+def add_student():
+    try:
+        student_id = input("Enter Student ID: ").strip()
+        if not student_id:
+            raise ValueError("Student ID cannot be empty.")
+
+        if student_id in students:
+            raise ValueError("Student ID already exists.")
+
+        grade = input("Enter Grade: ").strip()
+        if not grade:
+            raise ValueError("Grade cannot be empty.")
+
+        grade = float(grade)   # Type check
+        students[student_id] = grade
+        print("Student record added successfully.")
+
+    except ValueError as e:
+        print("Error:", e)
+
+
+def update_grade():
+    try:
+        student_id = input("Enter Student ID to update: ").strip()
+
+        if student_id not in students:
+            raise KeyError("Invalid Student ID.")
+
+        grade = input("Enter New Grade: ").strip()
+        if not grade:
+            raise ValueError("Grade cannot be empty.")
+
+        grade = float(grade)
+        students[student_id] = grade
+        print("Grade updated successfully.")
+
+    except (ValueError, KeyError) as e:
+        print("Error:", e)
+
+
+def delete_student():
+    try:
+        student_id = input("Enter Student ID to delete: ").strip()
+
+        if student_id not in students:
+            raise KeyError("Invalid Student ID.")
+
+        del students[student_id]
+        print("Student record deleted.")
+
+    except KeyError as e:
+        print("Error:", e)
+
+
+def display_students():
+    if not students:
+        print("No student records found.")
+    else:
+        print("\nStudent Records")
+        for sid, grade in students.items():
+            print(f"ID: {sid} | Grade: {grade}")
+
+
+def menu():
+    while True:
+        print("\n--- Student Grade Management System ---")
+        print("1. Add Student Grade")
+        print("2. Update Student Grade")
+        print("3. Delete Student")
+        print("4. Display All Students")
+        print("5. Exit")
+
+        choice = input("Enter choice: ")
+
+        if choice == '1':
+            add_student()
+        elif choice == '2':
+            update_grade()
+        elif choice == '3':
+            delete_student()
+        elif choice == '4':
+            display_students()
+        elif choice == '5':
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+menu()

@@ -1,0 +1,84 @@
+# Flight Booking System
+
+flights = {
+    "F101": {"route": "Delhi-Mumbai", "seats": 5, "price": 5000},
+    "F102": {"route": "Kolkata-Bangalore", "seats": 3, "price": 6000},
+    "F103": {"route": "Chennai-Delhi", "seats": 4, "price": 5500}
+}
+
+bookings = {}
+
+def search_flights():
+    print("\nAvailable Flights:")
+    for fid, info in flights.items():
+        print(f"Flight: {fid} | Route: {info['route']} | Seats: {info['seats']} | Price: {info['price']}")
+
+
+def book_ticket():
+    try:
+        fid = input("Enter Flight ID: ").strip()
+        if fid not in flights:
+            raise ValueError("Invalid flight ID.")
+
+        name = input("Enter Passenger Name: ").strip()
+        if not name:
+            raise ValueError("Invalid passenger details.")
+
+        if flights[fid]["seats"] <= 0:
+            raise Exception("Seat not available.")
+
+        payment = input("Enter payment status (success/fail): ").strip().lower()
+        if payment != "success":
+            raise Exception("Payment failure.")
+
+        flights[fid]["seats"] -= 1
+        booking_id = len(bookings) + 1
+        bookings[booking_id] = {"flight": fid, "passenger": name}
+
+        print(f"Booking successful. Booking ID: {booking_id}")
+
+    except Exception as e:
+        print("Error:", e)
+
+
+def cancel_booking():
+    try:
+        bid = int(input("Enter Booking ID to cancel: "))
+
+        if bid not in bookings:
+            raise ValueError("Invalid booking ID.")
+
+        fid = bookings[bid]["flight"]
+        flights[fid]["seats"] += 1
+
+        del bookings[bid]
+
+        print("Booking cancelled successfully.")
+
+    except ValueError as e:
+        print("Error:", e)
+
+
+def menu():
+    while True:
+        print("\n--- Flight Booking System ---")
+        print("1. Search Flights")
+        print("2. Book Ticket")
+        print("3. Cancel Booking")
+        print("4. Exit")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            search_flights()
+        elif choice == "2":
+            book_ticket()
+        elif choice == "3":
+            cancel_booking()
+        elif choice == "4":
+            print("Exiting system...")
+            break
+        else:
+            print("Invalid choice.")
+
+menu()

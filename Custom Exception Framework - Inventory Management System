@@ -1,0 +1,74 @@
+# Custom Exception Framework - Inventory Management System
+
+# Custom Exceptions
+class OutOfStockError(Exception):
+    pass
+
+class InvalidProductIDError(Exception):
+    pass
+
+class InvalidQuantityError(Exception):
+    pass
+
+
+# Inventory Data
+inventory = {
+    101: {"name": "Laptop", "stock": 5},
+    102: {"name": "Mouse", "stock": 20},
+    103: {"name": "Keyboard", "stock": 10}
+}
+
+
+def show_inventory():
+    print("\nInventory List:")
+    for pid, details in inventory.items():
+        print(f"ID: {pid} | Product: {details['name']} | Stock: {details['stock']}")
+
+
+def purchase_product():
+    try:
+        pid = int(input("Enter Product ID: "))
+        if pid not in inventory:
+            raise InvalidProductIDError("Product ID does not exist.")
+
+        qty = int(input("Enter quantity: "))
+        if qty <= 0:
+            raise InvalidQuantityError("Quantity must be greater than zero.")
+
+        if inventory[pid]["stock"] < qty:
+            raise OutOfStockError("Not enough stock available.")
+
+        inventory[pid]["stock"] -= qty
+        print("Purchase successful.")
+
+    except InvalidProductIDError as e:
+        print("Error:", e)
+    except InvalidQuantityError as e:
+        print("Error:", e)
+    except OutOfStockError as e:
+        print("Error:", e)
+    except ValueError:
+        print("Error: Invalid input type.")
+
+
+def menu():
+    while True:
+        print("\n--- Inventory Management System ---")
+        print("1. Show Inventory")
+        print("2. Purchase Product")
+        print("3. Exit")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            show_inventory()
+        elif choice == "2":
+            purchase_product()
+        elif choice == "3":
+            print("Exiting system...")
+            break
+        else:
+            print("Invalid choice.")
+
+
+menu()
